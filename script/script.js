@@ -1,52 +1,76 @@
 const content = document.querySelector(`#fill-to-do-list`)
-const taskList = document.querySelector("#task-list")
+const taskList = document.querySelector(".task-list")
 
 const addTask = () => {
-    if (content.value === '')
-    {
-        alert("Please fill the input box!")
-    }
-    else
-    {
-        let newTask = document.createElement("li")
-        newTask.innerHTML = content.value
-        taskList.appendChild(newTask)
-        let editBtn = document.createElement("span")
+    if (content.value === '') alert("Please fill the input box!")
+    else{
+        // add new container
+        let wraper = document.createElement("div")
+        wraper.setAttribute("class" , "test")
+        taskList.appendChild(wraper)
+        // add a new task list
+        let newTask = document.createElement("input")
+        newTask.value = content.value
+        newTask.setAttribute("type", "text")
+        newTask.setAttribute("disabled", "")
+        wraper.appendChild(newTask)
+        // add new container
+        let action = document.createElement("div")
+        action.setAttribute("class", "action")
+        wraper.appendChild(action)
+        // add edit button
+        let editBtn = document.createElement("button")
         editBtn.innerHTML = "&#9998"
-        // editBtn.classList.add("editBtn")
         editBtn.setAttribute("class", "editBtn")
-        newTask.appendChild(editBtn)
-        let deleteBtn = document.createElement("span")
+        action.append(editBtn)
+        // add delete button
+        let deleteBtn = document.createElement("button")
         deleteBtn.innerHTML = "\u00d7"
-        // deleteBtn.classList.add("deleteBtn")
-        // deleteBtn.setAttribute("class", "deleteBtn")
-        deleteBtn.setAttribute("id", "pak")
-        newTask.appendChild(deleteBtn)
+        deleteBtn.setAttribute("id", "deleteBtn")
+        action.appendChild(deleteBtn)
     }
     content.value = ""
-    saveData()
+    // saveData()
 }
 
-const saveData = () => {
-    console.log("works")
-    localStorage.setItem("data", taskList.innerHTML)
-}
+// const saveData = () => {
+//     localStorage.setItem("data", taskList.innerHTML)
+//     //untuk nyimpen datanya bisa pakai JSON
+// }
 
-const showData = () => {
-    taskList.innerHTML = localStorage.getItem("data")
-}
+// const showData = () => {
+//     taskList.innerHTML = localStorage.getItem("data")
+// }
 
-showData()
+// const deleteData = () => {
+//     localStorage.removeItem("data")
+// }
+
+// showData()
+
+// deleteData()
 
 taskList.addEventListener("click", (e) => {
-    if (e.target.tagName === "LI") { // tagName should be uppercase, it's default
-        e.target.classList.toglle("checked")
-        saveData()
+    if (e.target.tagName === "INPUT") { // tagName should be uppercase, it's default
+        // e.target.classList.toglle("checked")
+        console.log("isi")
+        // saveData()
     }
-    // else if (e.target.tagName === "SPAN") {
-    // else if (e.target.classList.contains("deleteBtn")) {
-    else if (e.target.id === "pak") {
-        e.target.parentElement.remove()
-        saveData()
+    else if (e.target.id === "deleteBtn") {
+        e.target.parentElement.parentElement.remove()
+        // saveData()
+    }
+    else if (e.target.classList.contains("editBtn")){
+        let task = e.target.parentElement.parentElement.firstChild
+        if (e.target.innerHTML === "✎"){
+            task.removeAttribute("disabled")
+            task.focus()
+            e.target.innerHTML = "Save"
+        }
+        else {
+            task.setAttribute("disabled", "")
+            e.target.innerHTML = "&#9998"
+        }
+        // saveData()
     }
 }, false)
