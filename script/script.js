@@ -47,7 +47,6 @@ const saveData = (value) => {
     todoList.push(todo)
     console.log("countInput : " + countInput)
     localStorage.setItem("value", JSON.stringify(todoList))
-    //untuk nyimpen datanya bisa pakai JSON
 }
 
 const showData = () => {
@@ -67,58 +66,40 @@ const showData = () => {
     console.log("countInputSekarang : " + countInput)
 }
 
-// const deleteData = () => {
-//     localStorage.removeItem("data")
-// }
-
 showData()
 
-// deleteData()
 
 taskList.addEventListener("click", (e) => {
     if (e.target.tagName === "INPUT") { // tagName should be uppercase, it's default
-        // e.target.classList.toglle("checked")
         console.log("isi")
-        // saveData()
     }
     else if (e.target.id === "deleteBtn") {
-        // const y = `{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`
         const x = JSON.parse(`{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`)
-        // console.log(x)
-        // console.log(y)
         todoList = todoList.filter(t => t.content != x.content)
         console.log(JSON.stringify(todoList))
         console.log(todoList)
-        
-        
-        
-        // const x = JSON.parse(`{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`)
-        // todoList.forEach(todo => {
-        //     if (todo.content === x.content) {
-        //         console.log(todo)
-        //         console.log(x)
-        //         console.log("kembar")
-        //         todoList = todoList.filter(t => t.content != x.content)
-        //     }
-        //     console.log("cek : " + JSON.stringify(todo))
-        //     console.log("hasil : " + JSON.stringify(todoList))
-            // console.log(todoList)
-        // })
+    
         e.target.parentElement.parentElement.remove()
         localStorage.setItem("element", taskList.innerHTML)
         localStorage.setItem("value", JSON.stringify(todoList))
     }
     else if (e.target.classList.contains("editBtn")){
         let task = e.target.parentElement.parentElement.firstChild
+        let getClass = task.className
+        let idx = getClass.split("-")
         if (e.target.innerHTML === "✎"){
             task.removeAttribute("disabled")
             task.focus()
-            e.target.innerHTML = "Save"
+            console.log(idx)
+            e.target.innerHTML = "&#10003"
         }
         else {
+            todoList[idx[1] - 1].content = task.value
+            console.log(todoList[idx[1] - 1].content)
             task.setAttribute("disabled", "")
             e.target.innerHTML = "&#9998"
         }
-        // saveData()
+        localStorage.setItem("element", taskList.innerHTML)
+        localStorage.setItem("value", JSON.stringify(todoList))
     }
 }, false)

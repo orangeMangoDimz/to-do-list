@@ -7,7 +7,96 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.task-list{
+body{
+    width: 100%;
+    height: 100vw;
+    background-color: whitesmoke;
+}
+
+.container{
+    min-width: 50%;
+    border-radius: 15px;
+}
+
+.title{
+    padding: 2rem 3rem;
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: #ca5448;
+    border-radius: 15px 15px 0 0;
+    color: whitesmoke;
+}
+
+.test{
     display: flex;
     flex-direction: row;
+    border-bottom: 0.5px solid #cececd;
+}
+
+.input-to-do-list{
+    font-size: 1.5rem;
+    margin: 2rem 3rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.test{
+    margin: 1rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-list{
+    margin: 2rem 3rem;
+}
+
+input{
+    padding: 1rem 1.2rem;
+    width: 92%;
+    font-size: 1.2rem;
+    border: none;
+    margin-right: 1rem;
+    border-radius: 5px;
+    outline: none;
+    background: none;
+}
+
+::placeholder{
+    color: #ca5448;
+    font-style: italic;
+}
+
+input:disabled{
+    border: none;
+    color: black;
+}
+
+
+.addBtn{
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    width: 5%;
+    background: none;
+    border: none;
+    color: whitesmoke;
+    background-color: rgb(255, 92, 74);
+    border-radius: 15px;
+}
+
+.editBtn, #deleteBtn{
+    padding: 1rem 1.2rem;
+    width: 50%;
+    align-items: center;
+    font-size: 2rem;
+    border: none;
+    background: none;
+    border-radius: 5px;
+    color: rgb(255, 92, 74);
+
+}
+
+
+.action{
+    width: 10%;
 }
