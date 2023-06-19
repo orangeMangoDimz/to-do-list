@@ -1,9 +1,10 @@
 const content = document.querySelector(`#fill-to-do-list`)
 const taskList = document.querySelector(".task-list")
 let todoList = JSON.parse(localStorage.getItem("value")) || []
-let countInput = "1"
+let countInput 
 
 const addTask = () => {
+    console.log("dapat : ", countInput)
     if (content.value === '') alert("Please fill the input box!")
     else{
         // add new container
@@ -38,25 +39,32 @@ const addTask = () => {
 
 const saveData = (value) => {
     localStorage.setItem("element", taskList.innerHTML)
-    todo = {
+    localStorage.setItem("countInput", countInput)
+    let todo = {
+        id : countInput-1,
         content : value
     }
     todoList.push(todo)
+    console.log("countInput : " + countInput)
     localStorage.setItem("value", JSON.stringify(todoList))
     //untuk nyimpen datanya bisa pakai JSON
 }
 
 const showData = () => {
     taskList.innerHTML = localStorage.getItem("element")
-    let temp = countInput
+    let temp = localStorage.getItem("countInput")
+    console.log("temp : " + temp)
     countInput = "1"
     todoList.forEach(element => {
         console.log(element.content)
         console.log(countInput)
-        let input = document.querySelector(".input-" + countInput++)
+        let input = document.querySelector(".input-" + element.id)
+        console.log(input)
         input.value = element.content
     })
     countInput = temp
+    if (countInput === null) countInput = "1"
+    console.log("countInputSekarang : " + countInput)
 }
 
 // const deleteData = () => {
@@ -74,11 +82,31 @@ taskList.addEventListener("click", (e) => {
         // saveData()
     }
     else if (e.target.id === "deleteBtn") {
-        e.target.parentElement.parentElement.remove()
-
-        // let y = todoList.filter(t => t != todo)
+        // const y = `{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`
+        const x = JSON.parse(`{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`)
+        // console.log(x)
         // console.log(y)
-        // localStorage.setItem("value", JSON.stringify(todoList))
+        todoList = todoList.filter(t => t.content != x.content)
+        console.log(JSON.stringify(todoList))
+        console.log(todoList)
+        
+        
+        
+        // const x = JSON.parse(`{"content":"` + e.target.parentElement.parentElement.firstChild.value + `"}`)
+        // todoList.forEach(todo => {
+        //     if (todo.content === x.content) {
+        //         console.log(todo)
+        //         console.log(x)
+        //         console.log("kembar")
+        //         todoList = todoList.filter(t => t.content != x.content)
+        //     }
+        //     console.log("cek : " + JSON.stringify(todo))
+        //     console.log("hasil : " + JSON.stringify(todoList))
+            // console.log(todoList)
+        // })
+        e.target.parentElement.parentElement.remove()
+        localStorage.setItem("element", taskList.innerHTML)
+        localStorage.setItem("value", JSON.stringify(todoList))
     }
     else if (e.target.classList.contains("editBtn")){
         let task = e.target.parentElement.parentElement.firstChild
